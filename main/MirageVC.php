@@ -36,7 +36,7 @@ if( !defined( 'SHOWDEBUG_CONTENT_HEADER' )) define( 'SHOWDEBUG_CONTENT_HEADER', 
 
 if( !defined( 'CONTROLLERS_DIR' )) define( 'CONTROLLERS_DIR', 'controller' ) ;
 if( !defined( 'VIEWS_DIR' )) define( 'VIEWS_DIR', 'view' ) ;
-if( !defined( 'PRESENTATION_RESOURCES_DIR' )) define( 'PRESENTATION_RESOURCES_DIR', 'includes/html' ) ;
+if( !defined( 'PRESENTATION_RESOURCES_DIR' )) define( 'PRESENTATION_RESOURCES_DIR', 'includes' ) ;
 
 if( !defined( 'APPLICATION_OS' )) define( 'APPLICATION_OS', 'unix' ) ;
 
@@ -106,7 +106,8 @@ if( $pageClass->authenticated( AUTH_USER_KEY )) {
 function showDebug( $arg, $die=true ) {
     
     if( !headers_sent() ) {
-	header( SHOWDEBUG_CONTENT_HEADER ) ;
+	//header( SHOWDEBUG_CONTENT_HEADER ) ;
+	header( "Content-type: text/plain" ) ;
 	print_r( $arg ) ;
     } else {
 	print "<pre>" ;
