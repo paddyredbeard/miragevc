@@ -78,13 +78,14 @@ if( SHOW_DEBUG ) {
 /////////////////////////////////////////////////////////////////////////////////
 // figure out the requested page
 ////////////////////////////////////////
-$requestedPage = UriResource::getRequestedResource() ;
-$requestedResource = CONTROLLERS_DIR . "_" . $requestedPage ;
-$pageClass = new $requestedResource() ;
+$requestedResources = UriResource::getRequestedResources() ;
+$requestedPage = $requestedResources['page'] ;
+$requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
+$pageObject = new $requestedClass() ;
 
 @session_start() ;
-if( $pageClass->authenticated( AUTH_USER_KEY )) {
-    $pageClass->doAction() ;
+if( $pageObject->authenticated( AUTH_USER_KEY )) {
+    $pageObject->doAction() ;
 } else {
     $_SESSION['destination_uri'] = $requestedPage ;
     header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
