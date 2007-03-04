@@ -15,15 +15,20 @@ class UriResource {
 			$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
 			$requestArgs = explode( "/", $theResource ) ;
 
-			for( $i=count($requestArgs)-1; $i>=1; $i-- ) {
+			for( $i=count($requestArgs)-1; $i>=0; $i-- ) {
 				$lastArg = $requestArgs[$i] ;
 				if( !empty( $lastArg )) {
 					break ;
 				}
 			}
 
-			$theResource = str_replace( "/$lastArg/", '', $theResource ) ;
-			$theResource = str_replace( "/$lastArg", '', $theResource ) ;
+			if( is_numeric( $lastArg )) {
+				$theResource = str_replace( "/$lastArg/", '', $theResource ) ;
+				$theResource = str_replace( "/$lastArg", '', $theResource ) ;
+			} else {
+				$theResource = str_replace( "$lastArg/", "$lastArg", $theResource ) ;
+			}
+
 			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
 			$theResource = str_replace( '/', '_', $theResource ) ;
 		}
