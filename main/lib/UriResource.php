@@ -2,15 +2,23 @@
 
 class UriResource {
 
+
+	// extract the name of the controller class based on REQUEST_URI
 	public static function getRequestedResources() {
 
 		$requestedResources = array( 'page'=>'', 'itemNumber'=>'' ) ;
 		$lastArg = null ;
 
+
+		// serve the default controller
 		if( APPLICATION_URI == $_SERVER['REQUEST_URI'] ) {
 			$theResource = DEFAULT_URI_RESOURCE ;
+
+		// serve the default controller
 		} elseif( $_SERVER['REQUEST_URI'] == APPLICATION_BASE_URI."/" ) {
 			$theResource = DEFAULT_URI_RESOURCE ;
+
+		// parse the class name
 		} else {
 			$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
 			$requestArgs = explode( "/", $theResource ) ;

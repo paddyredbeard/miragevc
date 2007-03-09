@@ -23,7 +23,7 @@ if( !empty( $configErrors )) {
 
 
 /////////////////////////////////////////////////////////////////////////////////
-// The following constants are OPTIONALLY defined in the applications config.php
+// The following constants are OPTIONALLY defined in the application's mvcConfig.php
 // Default values are set here.
 ////////////////////////////////////////
 if( !defined( 'SHOW_DEBUG' )) define( 'SHOW_DEBUG', false ) ;
