@@ -38,9 +38,6 @@ if( $pageObject->authenticated( AUTH_USER_KEY )) {
 
 
 
-/**
- * includeLib4
- */
 function includeLib4() {
 	require_once( "lib4/HttpRequestVars.php" ) ;
 	require_once( "lib4/GetVars.php" ) ;
