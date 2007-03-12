@@ -1,21 +1,35 @@
 <?php
 
+/**
+ * UriResource.php
+ *
+ * @package	MirageVC
+ * @subpackage	MirageVC4
+ * @author	Patrick Barabe
+ * @copyright	Copyright &copy; 2007 Patrick Barabe
+ * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
+ * @filesource
+ *
+ */
+
+
 class UriResource {
 
 	function getRequestedResources() {
 
-		$requestedResources = array( 'include'=>'', 'class'=>'', 'itemNumber'=>'' ) ;
+		$includeFile = null ;
+		$theResource = null ;
 		$lastArg = null ;
+		$requestedResources = array( 'include'=>'', 'page'=>'', 'itemNumber'=>'' ) ;
 
 		if( APPLICATION_URI == $_SERVER['REQUEST_URI'] ) {
-			$requestedResources['include'] = DEFAULT_URI_RESOURCE . ".php" ;
+			$includeFile = DEFAULT_URI_RESOURCE . ".php" ;
 			$theResource = DEFAULT_URI_RESOURCE ;
 		} elseif( $_SERVER['REQUEST_URI'] == APPLICATION_BASE_URI."/" ) {
-			$requestedResources['include'] = DEFAULT_URI_RESOURCE . ".php" ;
+			$includeFile = DEFAULT_URI_RESOURCE . ".php" ;
 			$theResource = DEFAULT_URI_RESOURCE ;
 		} else {
 			$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
-			$requestedResources['include'] = $theResource . ".php" ;
 			$requestArgs = explode( "/", $theResource ) ;
 
 			for( $i=count($requestArgs)-1; $i>=0; $i-- ) {
@@ -26,10 +40,13 @@ class UriResource {
 			}
 
 			if( is_numeric( $lastArg )) {
+				$includeFile = str_replace( "/$lastArg/", '', $theResource ) . ".php" ;
+				$includeFile = str_replace( "/$lastArg", '', $includeFile ) ;
 				$theResource = str_replace( "/$lastArg/", '', $theResource ) ;
 				$theResource = str_replace( "/$lastArg", '', $theResource ) ;
 			} else {
 				$theResource = str_replace( "$lastArg/", "$lastArg", $theResource ) ;
+				$includeFile = $theResource . ".php" ;
 			}
 
 			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
@@ -46,6 +63,7 @@ class UriResource {
 
 		$requestedResources['page'] = $theResource ;
 		$requestedResources['itemNumber'] = is_numeric( $lastArg ) ? $lastArg : null ;
+		$requestedResources['include'] = $includeFile ;
 
 		return $requestedResources ; 
 	}

@@ -1,5 +1,17 @@
 <?php
 
+/**
+ * Model.php
+ *
+ * @package	MirageVC
+ * @author	Patrick Barabe
+ * @copyright	Copyright &copy; 2007 Patrick Barabe
+ * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
+ * @filesource
+ *
+ */
+
+
 abstract class Model extends MDB2 {
 
 	public $data ;
@@ -68,6 +80,89 @@ abstract class Model extends MDB2 {
                                 "No database schema file found for class: Tried \"$schemaFile\""
                                 ) ;
 	}// end getSchema
+
+
+	// generic method to create or update the db record
+	function save() {
+		
+		$pkValue = $this->data[$this->pkField] ;
+		if( empty( $pkValue )) {
+			return $this->create() ;
+		} else {
+			return $this->update() ;
+		}
+		
+	}// end save
+
+
+
+	// create the db record
+	function create() {
+
+		$objectData = array() ;
+		foreach( $this->schema['fields'] as $nextField ) {
+			if( !empty( $this->data[$nextField] )) {
+
+				switch( $this->schema['field_definitions'][$nextField] ) {
+				case DB_DATATYPE_STRING_BASIC:
+				case DB_DATATYPE_STRING_EMAIL:
+					$objectData[$nextField] = "'{$this->data[$nextField]}'" ;
+					break ;
+					
+				default:
+					$objectData[$nextField] = $this->data[$nextField] ;
+					break ;
+				}// end switch
+
+			}
+		}
+
+		$sql  = "INSERT INTO {$this->table} ( " ;
+		$sql .= implode( ", ", array_keys( $objectData )) ;
+		$sql .= " ) VALUES ( " . implode( ", ", $objectData ) . " )" ;
+
+		return $this->dbConnection->exec( $sql ) ;
+
+	}// end create
+	
+
+
+	// update the db record
+	function update() {
+
+		$updateFields = array() ;
+		foreach( $this->schema['fields'] as $nextField ) {
+			if( !empty( $this->data[$nextField] )) {
+
+				switch( $this->schema['field_definitions'][$nextField] ) {
+				case DB_DATATYPE_STRING_BASIC:
+				case DB_DATATYPE_STRING_EMAIL:
+					$updateFields[] = "$nextField='{$this->data[$nextField]}'" ;
+					break ;
+					
+				default:
+					$objectData[] = "$nextField={$this->data[$nextField]}" ;
+					break ;
+				}// end switch
+
+			}
+		}
+
+		$sql  = "UPDATE {$this->table} SET " ;
+		$sql .= implode( ", ", $updateFields ) ;
+		$sql .= " WHERE {$this->pkField}=".$this->data[$this->pkField] ;
+
+		return $this->dbConnection->exec( $sql ) ;
+
+	}// end update
+
+
+	// delete the object's record from the db
+	function delete() {
+		$sql = "DELETE FROM {$this->table} WHERE {$this->pkField}=".$this->data[$this->pkField] ;
+		return $this->dbConnection->exec( $sql ) ;
+	}
+
 
 
 	public function __destruct() {}
@@ -174,9 +269,10 @@ abstract class Model extends MDB2 {
 			}
 
 			// set the schema
-			if( $returnArray['size'] > 0 ) {
-				$returnArray['schema'] = $returnArray['objects'][0]->schema ;
-			}
+			//if( $returnArray['size'] > 0 ) {
+				//$returnArray['schema'] = $returnArray['objects'][0]->schema ;
+				$returnArray['schema'] = $templateObj->schema ;
+			//}
 		}
 
 		return $returnArray ;
