@@ -7,7 +7,6 @@
  * @author	Patrick Barabe
  * @copyright	Copyright &copy; 2007 Patrick Barabe
  * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
- * @filesource
  *
  */
 
@@ -240,7 +239,7 @@ abstract class Model extends MDB2 {
 
 	// static method to create an array of model objects 
 	// using an array of "fieldname=value" elements
-	public static function collectionFactory( $className, $params=array() ) {
+	public static function collectionFactory( $className, $params=array(), $operator="AND" ) {
 		$returnArray = array( 'size'=>0, 'schema'=>null, 'objects'=>null ) ;
 
 		if( !empty( $className )) {
@@ -251,7 +250,7 @@ abstract class Model extends MDB2 {
 			// assemble sql from input params and do query
 			$classTable = $templateObj->schema['dbparams']['table'] ;
 			$fieldList = implode( ",", $templateObj->schema['fields'] ) ;
-			$whereString = implode( " AND ", $params ) ;
+			$whereString = implode( " $operator ", $params ) ;
 			$sql = "SELECT $fieldList FROM $classTable" ;
 
 			if( !empty( $whereString )) {
