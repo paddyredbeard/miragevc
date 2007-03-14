@@ -11,6 +11,11 @@
  */
 
 
+/**
+ * GetVars
+ *
+ * A wrapper around the $_GET array.
+ */
 class GetVars extends HttpRequestVars {
 
     public function __construct() {

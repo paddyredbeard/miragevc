@@ -10,6 +10,12 @@
  *
  */
 
+/**
+ * AuthUser
+ *
+ * An abstract {@link Controller} class that requires an
+ * authenticated user in order to be instantiated.
+ */
 abstract class AuthUser extends Controller {
 
     public function __construct() {
@@ -20,6 +26,15 @@ abstract class AuthUser extends Controller {
 	parent::__destruct() ;
     }
 
+
+    /**
+     * authenticated
+     *
+     * Method used to determine whether a user may access the requested URI.
+     *
+     * @param string $authUserKey The SESSION key that stores a userid.
+     * @return bool True if a session has started and the application has stored a userid.
+     */
     public function authenticated( $authUserKey ) {
 
 	$_output = false ;

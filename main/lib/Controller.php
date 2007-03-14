@@ -11,12 +11,36 @@
  */
 
 
+/**
+ * Controller
+ *
+ * An abstract class that helps negotiate the resource for the requested URI.
+ */ 
 abstract class Controller {
 
+    /**
+     * @var {@link GetVars}
+     */
     protected $_getVars ;
+
+    /**
+     * @var {@link PostVars}
+     /*
     protected $_postVars ;
+
+    /**
+     * @var {@link UriResource}
+     */
     protected $_uriResource ;
+
+    /**
+     * @var integer
+     */
     protected $_itemNumber ;
+
+    /**
+     * @var {@link View}
+     */
     protected $_view ;
 
     public function __construct() {
@@ -31,8 +55,20 @@ abstract class Controller {
 
     public function __destruct() {}
 
+    /**
+     * doAction
+     *
+     * The &quot;main&quot; method of instantiable Controller classes
+     */
     abstract public function doAction() ;
 
+    /**
+     * authenticated
+     *
+     * Abstract method used to determine whether a user may access the requested URI.
+     *
+     * @return bool
+     */
     abstract public function authenticated( $authUserKey ) ;
 
 }// end Controller

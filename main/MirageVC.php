@@ -38,13 +38,13 @@ if( !empty( $configErrors )) {
 // The following constants are OPTIONALLY defined in the application's mvcConfig.php
 // Default values are set here.
 ////////////////////////////////////////
+
 if( !defined( 'SHOW_DEBUG' )) define( 'SHOW_DEBUG', false ) ;
+if( !defined( 'SHOWDEBUG_CONTENT_HEADER' )) define( 'SHOWDEBUG_CONTENT_HEADER', 'Content-type: text/plain' ) ;
 
 if( !defined( 'APPLICATION_INDEX_URI' )) define( 'APPLICATION_INDEX_URI', '/index.php' ) ;
 if( !defined( 'DEFAULT_URI_RESOURCE' )) define( 'DEFAULT_URI_RESOURCE', 'default' ) ;
 if( !defined( 'APPLICATION_URI' )) define( 'APPLICATION_URI', APPLICATION_BASE_URI.APPLICATION_INDEX_URI ) ;
-
-if( !defined( 'SHOWDEBUG_CONTENT_HEADER' )) define( 'SHOWDEBUG_CONTENT_HEADER', 'Content-type: text/plain' ) ;
 
 if( !defined( 'CONTROLLERS_DIR' )) define( 'CONTROLLERS_DIR', 'controller' ) ;
 if( !defined( 'VIEWS_DIR' )) define( 'VIEWS_DIR', 'view' ) ;
@@ -100,6 +100,11 @@ if( SHOW_DEBUG ) {
 
 /**
  * showDebug
+ * 
+ * Display the input data.
+ *
+ * @param mixed $arg The information to display.
+ * @param bool $die Whether to stop script execution. Defaults to True.
  */
 function showDebug( $arg, $die=true ) {
 
@@ -137,6 +142,10 @@ function __autoload($class) {
 
 /**
  * getFiller
+ *
+ * Get a paragraph or Lorem Ipsum text.
+ * 
+ * @return string
  */
 function getFiller() {
 	$loremIpsum = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi." ;
@@ -163,6 +172,7 @@ if( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
 
 
 } else {// PHP5
+
 	/////////////////////////////////////////////////////////////////////////////////
 	// figure out the requested page
 	////////////////////////////////////////

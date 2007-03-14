@@ -11,6 +11,14 @@
  */
 
 
+/**
+ * UriResource
+ *
+ * A utility class to determine what {@link Controller} class 
+ * was requested from the REQUEST_URI
+ *
+ * @return array An array with the following keys: 'page' (string), 'itemNumber' (integer).
+ */
 class UriResource {
 
 

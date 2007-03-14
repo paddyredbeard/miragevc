@@ -11,14 +11,46 @@
  */
 
 
+/**
+ * Model
+ * 
+ * A database utility wrapper for MDB2.  A Model class represents one record in a table.
+ */
 abstract class Model extends MDB2 {
 
+	/**
+	 * @var array The DB record's data.
+	 */
 	public $data ;
+
+	/**
+	 * @var array The DB schema for the table.
+	 */
 	public $schema ;
+
+	/**
+	 * @var string The name of the DB table.
+	 */
 	protected $table ;
+
+	/**
+	 * @var string The name of the table's primary key field.
+	 */
 	protected $pkField ;
+
+	/**
+	 * @var object A MDB2 object
+	 */
 	protected $dbConnection ;
 
+	/**
+	 * __construct
+	 *
+	 * The class constructor.
+	 *
+	 * @param string $classFile The filesystem path to the instantiated Model class.
+	 * @param integer $recno The primary key value of a record to instantiate.
+	 */
 	public function __construct( $classFile=null, $recno=null ) {
 		$this->schema = Model::getSchema( $classFile ) ;
 		$this->dbConnection = &MDB2::singleton( APPLICATION_DSN ) ;
@@ -68,7 +100,14 @@ abstract class Model extends MDB2 {
 	}// end constructor
 
 
-	// populate the object's schema variable
+	/**
+         * getSchema	
+	 * 
+	 * A utility method to populate the object's schema variable
+	 * 
+	 * @param string $aClassFile The filesystem path to the instantiated Model class.
+	 * @return mixed True or PEAR_Error
+	 */
 	protected function getSchema( $aClassFile ) {
 		$output = false ;
                 $schemaFile = str_replace( ".php", ".ini", $aClassFile ) ;
@@ -81,7 +120,15 @@ abstract class Model extends MDB2 {
 	}// end getSchema
 
 
-	// generic method to create or update the db record
+	/**
+	 * save
+	 *
+	 * Generic method to create or update the db record.  
+	 * Calls either create or update depending on whether the 
+	 * primary key already has a value or not.
+	 *
+	 * @return mixed True or PEAR_Error
+	 */
 	function save() {
 		
 		$pkValue = $this->data[$this->pkField] ;
@@ -95,7 +142,13 @@ abstract class Model extends MDB2 {
 
 
 
-	// create the db record
+	/**
+	 * create
+	 *
+	 * Create a new DB record.
+	 *
+	 * @return mixed True or PEAR_Error
+	 */
 	function create() {
 
 		$objectData = array() ;
@@ -126,7 +179,13 @@ abstract class Model extends MDB2 {
 	
 
 
-	// update the db record
+	/**
+         * update
+	 *
+	 * Update the object's DB record.
+	 *
+	 * @return True or PEAR_Error
+	 */
 	function update() {
 
 		$updateFields = array() ;
@@ -156,7 +215,13 @@ abstract class Model extends MDB2 {
 	}// end update
 
 
-	// delete the object's record from the db
+	/**
+	 * delete
+	 *
+	 * Delete the object's record from the DB.
+	 * 
+	 * @return mixed The result of MDB2::exec()
+	 */
 	function delete() {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->pkField}=".$this->data[$this->pkField] ;
 		return $this->dbConnection->exec( $sql ) ;
@@ -172,7 +237,14 @@ abstract class Model extends MDB2 {
         }
 
 
-	// overloading method __get
+	/**
+	 * __get
+	 *
+	 * Get a field's value from the object's $data array
+	 *
+	 * @param string $anAttribute The field to return a value from.
+	 * @return mixed The field's value or PEAR_Error
+	 */
 	public function __get( $anAttribute ) {
                 $_output = false ;
 
@@ -190,7 +262,15 @@ abstract class Model extends MDB2 {
 	}// end __get
 
 
-	// overloading method __set
+	/**
+	 * __set
+	 *
+	 * Set a field's value in the object's $data array
+	 *
+	 * @param string $anAttribute The field to set.
+	 * @param mixed $aValue The value to set.
+	 * @return mixed True or PEAR_Error
+	 */
 	public function __set( $anAttribute, $aValue ) {
                 $_output = false ;
 
@@ -210,9 +290,18 @@ abstract class Model extends MDB2 {
 	}// end __set
 
 
-	// static method to create a model object using
-	// an array of "fieldname=value" elements
-	public static function objFactory( $className, $params=null, $strict=false ) {
+	/**
+	 * objectFactory
+	 *
+	 * Static method to create a Model object determined
+	 * from an array of &quot;fieldname=value&quot; elements.
+	 *
+	 * @param string $className The type of Model object to instantiate.
+	 * @param array $params An array of &quot;fieldname=value&quot; elements.
+	 * @param bool $strict Whether to return a PEAR_Error or an empty object if no records match $params.
+	 * @return object Model or PEAR_Error object.
+	 */
+	public static function objectFactory( $className, $params=null, $strict=false ) {
 		$returnObj = null ;
 
 		if( !empty( $className ) && !empty( $params )) {
@@ -234,11 +323,20 @@ abstract class Model extends MDB2 {
 
 		return $returnObj ;
 
-	}// end objFactory
+	}// end objectFactory
 
 
-	// static method to create an array of model objects 
-	// using an array of "fieldname=value" elements
+	/**
+	 * collectionFactory
+	 *
+	 * Static method to create an array of Model objects determined
+	 * from an array of &quot;fieldname=value&quot; elements.
+	 *
+	 * @param string $className The type of Model object to instantiate.
+	 * @param array $params An array of &quot;fieldname=value&quot; elements.
+	 * @param string $operator The SQL operator with which to bind the $params elements.
+	 * @return array An array with the following keys: size (integer), schema (array), objects (array)
+	 */
 	public static function collectionFactory( $className, $params=array(), $operator="AND" ) {
 		$returnArray = array( 'size'=>0, 'schema'=>null, 'objects'=>null ) ;
 

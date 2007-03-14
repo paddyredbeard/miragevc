@@ -11,6 +11,11 @@
  */
 
 
+/**
+ * PostVars
+ *
+ * A wrapper around the $_POST array.
+ */
 class PostVars extends HttpRequestVars {
 
     public function __construct() {

@@ -10,7 +10,12 @@
  *
  */
 
-
+/**
+ * AuthNone
+ *
+ * An abstract {@link Controller} class that doesn't require an
+ * authenticated user in order to be instantiated.
+ */ 
 abstract class AuthNone extends Controller {
 
     public function __construct() {
@@ -21,6 +26,14 @@ abstract class AuthNone extends Controller {
 	parent::__destruct() ;
     }
 
+    /**
+     * authenticated
+     *
+     * Method used to determine whether a user may access the requested URI.
+     *
+     * @param string $authUserKey The SESSION key that stores a userid.
+     * @return bool Always returns true.
+     */
     public function authenticated( $authUserKey ) {
 	return true ;
     }
