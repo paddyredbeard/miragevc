@@ -338,7 +338,7 @@ abstract class Model extends MDB2 {
 	 * @return array An array with the following keys: size (integer), schema (array), objects (array)
 	 */
 	public static function collectionFactory( $className, $params=array(), $operator="AND" ) {
-		$returnArray = array( 'size'=>0, 'schema'=>null, 'objects'=>null ) ;
+		$returnArray = array( 'size'=>0, 'schema'=>null, 'objects'=>array() ) ;
 
 		if( !empty( $className )) {
 

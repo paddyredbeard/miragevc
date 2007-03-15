@@ -86,24 +86,9 @@ abstract class View {
     *
     * @param string $aKey The field to set.
     * @param mixed $aValue The value to set.
-    * @return mixed True or PEAR_Error
     */
     public function __set( $aKey, $aValue ) {
-	$_output = false ;
-
-	if( array_key_exists( $aKey, $this->data )) {
-        	$this->data[$aKey] = $aValue ;
-		$_output = true ;
-	} else {
-       		if ( SHOW_DEBUG ) {
-			$_output = PEAR::raiseError(
-					"Cannot set the requested property [$aKey] ."
-					) ;
-		}
-	}
-
-	return $_output ;
-
+        $this->_vars[$aKey] = $aValue ;
     }// end __set
 
 
