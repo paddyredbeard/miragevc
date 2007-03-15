@@ -48,6 +48,7 @@ class UriResource {
 				$includeFile = $theResource . ".php" ;
 			}
 
+			$includeFile = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $includeFile ) ;
 			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
 			$theResource = str_replace( '/', '_', $theResource ) ;
 		}
