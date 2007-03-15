@@ -64,6 +64,13 @@ class HttpStatus {
 	public static function sendStatus( $errNo, $die=false ) {
 		if( !empty( self::$httpStatusMap[$errNo] )) { 
 			header( self::$httpStatusMap[$errNo] );
+		} else {
+			showDebug( "Unknown HTTP Status." ) ;
+		}
+	}
+
+	public static function showStatus( $errNo, $die=false ) {
+		if( !empty( self::$httpStatusMap[$errNo] )) { 
 			showDebug( self::$httpStatusMap[$errNo], $die ) ;
 		} else {
 			showDebug( "Unknown HTTP Status." ) ;

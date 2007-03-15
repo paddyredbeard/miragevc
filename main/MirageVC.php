@@ -186,7 +186,8 @@ if( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
 	if( !class_exists( $requestedClass )) {
 		$error404 = ERROR_404_PAGE ;
 		if( empty( $error404 )) {
-			HttpStatus::sendStatus(404, true) ;
+			HttpStatus::sendStatus(404) ;
+			HttpStatus::showStatus(404, true) ;
 		} else {
 			header( "Location: ".APPLICATION_URI.ERROR_404_PAGE ) ;
 		}
