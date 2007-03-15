@@ -58,6 +58,9 @@ if( !defined( 'DB_DATATYPE_KEY' )) define( 'DB_DATATYPE_KEY', 'key' ) ;
 if( !defined( 'DB_DATATYPE_INTEGER' )) define( 'DB_DATATYPE_INTEGER', 'integer' ) ;
 if( !defined( 'DB_DATATYPE_FLOAT' )) define( 'DB_DATATYPE_FLOAT', 'float' ) ;
 
+if( !defined( 'ERROR_404_PAGE' )) define( 'ERROR_404_PAGE', '' ) ;
+if( !defined( 'ERROR_403_PAGE' )) define( 'ERROR_403_PAGE', '' ) ;
+
 
 /////////////////////////////////////////////////////////////////////////////////
 // setup include_path
@@ -179,15 +182,25 @@ if( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
 	$requestedResources = UriResource::getRequestedResources() ;
 	$requestedPage = $requestedResources['page'] ;
 	$requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
-	$pageObject = new $requestedClass() ;
 
-	@session_start() ;
-	if( $pageObject->authenticated( AUTH_USER_KEY )) {
-		$pageObject->doAction() ;
+	if( !class_exists( $requestedClass )) {
+		$error404 = ERROR_404_PAGE ;
+		if( empty( $error404 )) {
+			HttpStatus::sendStatus(404, true) ;
+		} else {
+			header( "Location: ".APPLICATION_URI.ERROR_404_PAGE ) ;
+		}
 	} else {
-		//$_SESSION['destination_uri'] = $requestedPage ;
-		$_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
-		header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
+		$pageObject = new $requestedClass() ;
+
+		@session_start() ;
+		if( $pageObject->authenticated( AUTH_USER_KEY )) {
+			$pageObject->doAction() ;
+		} else {
+			//$_SESSION['destination_uri'] = $requestedPage ;
+			$_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
+			header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
+		}
 	}
 }
 
