@@ -30,7 +30,7 @@ class PostVars extends HttpRequestVars {
 	$returnVar = null ;
 
 	if( !empty( $_POST[$aVar] )) {
-	    $returnVar = $_POST[$aVar] ;
+	    $returnVar = trim( $_POST[$aVar] ) ;
 	}
 
 	return $returnVar ;

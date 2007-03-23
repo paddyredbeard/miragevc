@@ -158,6 +158,7 @@ abstract class Model extends MDB2 {
 				switch( $this->schema['field_definitions'][$nextField] ) {
 				case DB_DATATYPE_STRING_BASIC:
 				case DB_DATATYPE_STRING_EMAIL:
+				case DB_DATATYPE_DATE:
 					$objectData[$nextField] = "'{$this->data[$nextField]}'" ;
 					break ;
 					
@@ -195,6 +196,7 @@ abstract class Model extends MDB2 {
 				switch( $this->schema['field_definitions'][$nextField] ) {
 				case DB_DATATYPE_STRING_BASIC:
 				case DB_DATATYPE_STRING_EMAIL:
+				case DB_DATATYPE_DATE:
 					$updateFields[] = "$nextField='{$this->data[$nextField]}'" ;
 					break ;
 					
@@ -246,7 +248,7 @@ abstract class Model extends MDB2 {
 	 * @return mixed The field's value or PEAR_Error
 	 */
 	public function __get( $anAttribute ) {
-                $_output = false ;
+                $_output = null ;
 
                 if( array_key_exists( $anAttribute, $this->data )) {
                         $_output = $this->data[$anAttribute] ;
@@ -370,6 +372,24 @@ abstract class Model extends MDB2 {
 				//$returnArray['schema'] = $returnArray['objects'][0]->schema ;
 				$returnArray['schema'] = $templateObj->schema ;
 			//}
+		}
+
+		return $returnArray ;
+	}
+
+	public static function getLookupArray( $className, $lookupField ) {
+
+		$returnArray = array() ;
+		$templateObj = new $className() ;
+
+		$table = $templateObj->schema['dbparams']['table'] ;
+		$pkField = $templateObj->schema['dbparams']['pkfield'] ;
+
+		$sql = "SELECT $pkField, $lookupField FROM $table" ;
+		$queryResult = $templateObj->dbConnection->query( $sql ) ;
+
+		while( $nextRec = $queryResult->fetchRow( MDB2_FETCHMODE_ASSOC )) {
+			$returnArray[$nextRec[$pkField]] = $nextRec[$lookupField] ;
 		}
 
 		return $returnArray ;

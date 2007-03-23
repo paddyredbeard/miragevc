@@ -54,6 +54,7 @@ if( !defined( 'APPLICATION_OS' )) define( 'APPLICATION_OS', 'unix' ) ;
 
 if( !defined( 'DB_DATATYPE_STRING_BASIC' )) define( 'DB_DATATYPE_STRING_BASIC', 'string' ) ;
 if( !defined( 'DB_DATATYPE_STRING_EMAIL' )) define( 'DB_DATATYPE_STRING_EMAIL', 'email' ) ;
+if( !defined( 'DB_DATATYPE_DATE' )) define( 'DB_DATATYPE_DATE', 'date' ) ;
 if( !defined( 'DB_DATATYPE_KEY' )) define( 'DB_DATATYPE_KEY', 'key' ) ;
 if( !defined( 'DB_DATATYPE_INTEGER' )) define( 'DB_DATATYPE_INTEGER', 'integer' ) ;
 if( !defined( 'DB_DATATYPE_FLOAT' )) define( 'DB_DATATYPE_FLOAT', 'float' ) ;

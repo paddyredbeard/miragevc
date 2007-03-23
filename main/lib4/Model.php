@@ -113,6 +113,7 @@ class Model extends MDB2 {
 				switch( $this->schema['field_definitions'][$nextField] ) {
 				case DB_DATATYPE_STRING_BASIC:
 				case DB_DATATYPE_STRING_EMAIL:
+				case DB_DATATYPE_DATE:
 					$objectData[$nextField] = "'{$this->data[$nextField]}'" ;
 					break ;
 					
@@ -144,6 +145,7 @@ class Model extends MDB2 {
 				switch( $this->schema['field_definitions'][$nextField] ) {
 				case DB_DATATYPE_STRING_BASIC:
 				case DB_DATATYPE_STRING_EMAIL:
+				case DB_DATATYPE_DATE:
 					$updateFields[] = "$nextField='{$this->data[$nextField]}'" ;
 					break ;
 					
