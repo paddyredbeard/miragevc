@@ -10,9 +10,10 @@
  *
  */
 
-
 @include_once( 'myConfig.php' ) ;
 require_once( 'mvcConfig.php' ) ;
+
+
 
 #################################################################################
 # Constants and Settings
