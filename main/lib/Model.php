@@ -55,7 +55,7 @@ abstract class Model extends MDB2 {
 		$this->schema = Model::getSchema( $classFile ) ;
 		$this->dbConnection = &MDB2::singleton( APPLICATION_DSN ) ;
 		$this->data = array() ;
-		
+
 		//add fields as data's array keys
 		foreach( $this->schema['fields'] as $nextField ) {
 			$this->data[$nextField] = null ;
@@ -85,7 +85,7 @@ abstract class Model extends MDB2 {
 				" FROM {$this->table} WHERE {$this->pkField}=$recno" ;
 
 			$queryResult = $this->dbConnection->query( $sql ) ;
-		
+
 			if( PEAR::isError( $queryResult )) {
 				showDebug( array( 'Query Error' => $queryResult->getMessage() )) ;
 			} else {
@@ -101,7 +101,7 @@ abstract class Model extends MDB2 {
 
 
 	/**
-         * getSchema	
+	 * getSchema	
 	 * 
 	 * A utility method to populate the object's schema variable
 	 * 
@@ -110,13 +110,13 @@ abstract class Model extends MDB2 {
 	 */
 	protected function getSchema( $aClassFile ) {
 		$output = false ;
-                $schemaFile = str_replace( ".php", ".ini", $aClassFile ) ;
+		$schemaFile = str_replace( ".php", ".ini", $aClassFile ) ;
 
-                return file_exists( $schemaFile ) ?
-	                parse_ini_file( $schemaFile, true ) :
-                	PEAR::raiseError(
-                                "No database schema file found for class: Tried \"$schemaFile\""
-                                ) ;
+		return file_exists( $schemaFile ) ?
+			parse_ini_file( $schemaFile, true ) :
+				PEAR::raiseError(
+						"No database schema file found for class: Tried \"$schemaFile\""
+						) ;
 	}// end getSchema
 
 
@@ -130,14 +130,22 @@ abstract class Model extends MDB2 {
 	 * @return mixed True or PEAR_Error
 	 */
 	function save() {
-		
-		$pkValue = $this->data[$this->pkField] ;
-		if( empty( $pkValue )) {
-			return $this->create() ;
-		} else {
-			return $this->update() ;
-		}
-		
+
+		//$isValid = $this->isValid() ;
+
+		//if( !PEAR::isError( $isValid )) {
+
+			$pkValue = $this->data[$this->pkField] ;
+			if( empty( $pkValue )) {
+				return $this->create() ;
+			} else {
+				return $this->update() ;
+			}
+
+		//} else {
+		//	return $isValid ;
+		//}
+
 	}// end save
 
 
@@ -156,15 +164,15 @@ abstract class Model extends MDB2 {
 			if( !empty( $this->data[$nextField] )) {
 
 				switch( $this->schema['field_definitions'][$nextField] ) {
-				case DB_DATATYPE_STRING_BASIC:
-				case DB_DATATYPE_STRING_EMAIL:
-				case DB_DATATYPE_DATE:
-					$objectData[$nextField] = "'{$this->data[$nextField]}'" ;
-					break ;
-					
-				default:
-					$objectData[$nextField] = $this->data[$nextField] ;
-					break ;
+					case DB_DATATYPE_STRING_BASIC:
+					case DB_DATATYPE_STRING_EMAIL:
+					case DB_DATATYPE_DATE:
+						$objectData[$nextField] = "'{$this->data[$nextField]}'" ;
+						break ;
+
+					default:
+						$objectData[$nextField] = $this->data[$nextField] ;
+						break ;
 				}// end switch
 
 			}
@@ -177,11 +185,11 @@ abstract class Model extends MDB2 {
 		return $this->dbConnection->exec( $sql ) ;
 
 	}// end create
-	
+
 
 
 	/**
-         * update
+	 * update
 	 *
 	 * Update the object's DB record.
 	 *
@@ -194,15 +202,15 @@ abstract class Model extends MDB2 {
 			if( !empty( $this->data[$nextField] )) {
 
 				switch( $this->schema['field_definitions'][$nextField] ) {
-				case DB_DATATYPE_STRING_BASIC:
-				case DB_DATATYPE_STRING_EMAIL:
-				case DB_DATATYPE_DATE:
-					$updateFields[] = "$nextField='{$this->data[$nextField]}'" ;
-					break ;
-					
-				default:
-					$objectData[] = "$nextField={$this->data[$nextField]}" ;
-					break ;
+					case DB_DATATYPE_STRING_BASIC:
+					case DB_DATATYPE_STRING_EMAIL:
+					case DB_DATATYPE_DATE:
+						$updateFields[] = "$nextField='{$this->data[$nextField]}'" ;
+						break ;
+
+					default:
+						$objectData[] = "$nextField={$this->data[$nextField]}" ;
+						break ;
 				}// end switch
 
 			}
@@ -234,9 +242,9 @@ abstract class Model extends MDB2 {
 	public function __destruct() {}
 
 
-        public function __toString() {
-                showDebug( $this->data ) ;
-        }
+	public function __toString() {
+		showDebug( $this->data ) ;
+	}
 
 
 	/**
@@ -248,19 +256,19 @@ abstract class Model extends MDB2 {
 	 * @return mixed The field's value or PEAR_Error
 	 */
 	public function __get( $anAttribute ) {
-                $_output = null ;
+		$_output = null ;
 
-                if( array_key_exists( $anAttribute, $this->data )) {
-                        $_output = $this->data[$anAttribute] ;
-                } else {
-                        if ( SHOW_DEBUG ) {
-                                $_output = PEAR::raiseError(
-                                                "Cannot get the requested property [$anAttribute] ."
-                                                ) ;
-                        }
-                }
+		if( array_key_exists( $anAttribute, $this->data )) {
+			$_output = html_entity_decode( $this->data[$anAttribute], ENT_QUOTES ) ;
+		} else {
+			if ( SHOW_DEBUG ) {
+				$_output = PEAR::raiseError(
+						"Cannot get the requested property [$anAttribute] ."
+						) ;
+			}
+		}
 
-                return $_output ;
+		return $_output ;
 	}// end __get
 
 
@@ -274,20 +282,20 @@ abstract class Model extends MDB2 {
 	 * @return mixed True or PEAR_Error
 	 */
 	public function __set( $anAttribute, $aValue ) {
-                $_output = false ;
+		$_output = false ;
 
-                if( array_key_exists( $anAttribute, $this->data )) {
-                        $this->data[$anAttribute] = $aValue ;
-                        $_output = true ;
-                } else {
-                        if ( SHOW_DEBUG ) {
-                                $_output = PEAR::raiseError(
-                                                "Cannot set the requested property [$anAttribute] ."
-                                                ) ;
-                        }
-                }
+		if( array_key_exists( $anAttribute, $this->data )) {
+			$this->data[$anAttribute] = htmlentities( $aValue, ENT_QUOTES ) ;
+			$_output = true ;
+		} else {
+			if ( SHOW_DEBUG ) {
+				$_output = PEAR::raiseError(
+						"Cannot set the requested property [$anAttribute] ."
+						) ;
+			}
+		}
 
-                return $_output ;
+		return $_output ;
 
 	}// end __set
 
@@ -358,7 +366,7 @@ abstract class Model extends MDB2 {
 			}
 
 			$queryResult = $templateObj->dbConnection->query( $sql ) ;
-			
+
 			// set the size
 			$returnArray['size'] = PEAR::isError( $queryResult->numRows() ) ? 0 : $queryResult->numRows() ;
 
@@ -369,14 +377,27 @@ abstract class Model extends MDB2 {
 
 			// set the schema
 			//if( $returnArray['size'] > 0 ) {
-				//$returnArray['schema'] = $returnArray['objects'][0]->schema ;
-				$returnArray['schema'] = $templateObj->schema ;
+			//$returnArray['schema'] = $returnArray['objects'][0]->schema ;
+			$returnArray['schema'] = $templateObj->schema ;
 			//}
 		}
 
 		return $returnArray ;
-	}
+	}// end collectionFactory
 
+
+
+
+	/**
+	 * getLookupArray
+	 *
+	 * Static method to return an array of lookup values from a table's records
+	 *
+	 * @param $className The name of the Model object to use.
+	 * @param $lookupField The name of the field to use as a lookup column.
+	 * @return array An array of lookup values using primary key values as the array's index values.
+	 *
+	 */
 	public static function getLookupArray( $className, $lookupField ) {
 
 		$returnArray = array() ;
@@ -393,6 +414,38 @@ abstract class Model extends MDB2 {
 		}
 
 		return $returnArray ;
+
+	}// end getLookupArray
+
+
+
+	/**
+	 * validateField
+	 *
+	 * Validate the specified fields's data.
+	 *
+	 */
+	private function validateField( $aField ) {
+		$isValid = false ;
+		$isValid = true ;
+		return $isValid ;
+	}
+
+
+	/**
+	 * isValid
+	 *
+	 * Validate the Model object's data.
+	 *
+	 */
+	private function isValid() {
+		$isValid = false ;
+
+		foreach( $this->schema['fields'] as $nextField ) {
+			$this->validateField( $nextField ) ;
+		}
+
+		return $isValid ;
 	}
 
 
