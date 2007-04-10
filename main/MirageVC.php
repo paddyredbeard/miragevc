@@ -10,6 +10,7 @@
  *
  * @todo	Implement better data validation (in class Model).
  * @todo	Add README and LICENSE files.
+ * @todo	Check PHP 4 Model class for consistancy w/recent changes.
  *
  */
 
