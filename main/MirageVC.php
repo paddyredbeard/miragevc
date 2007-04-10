@@ -8,6 +8,9 @@
  * @copyright	Copyright &copy; 2007 Patrick Barabe
  * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
  *
+ * @todo	Implement better data validation (in class Model).
+ * @todo	Add README and LICENSE files.
+ *
  */
 
 @include_once( 'myConfig.php' ) ;
