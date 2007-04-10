@@ -209,7 +209,7 @@ abstract class Model extends MDB2 {
 						break ;
 
 					default:
-						$objectData[] = "$nextField={$this->data[$nextField]}" ;
+						$updateFields[] = "$nextField={$this->data[$nextField]}" ;
 						break ;
 				}// end switch
 
