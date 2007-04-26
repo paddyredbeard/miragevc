@@ -364,11 +364,16 @@ abstract class Model extends MDB2 {
 			$classTable = $templateObj->schema['dbparams']['table'] ;
 			$fieldList = implode( ",", $templateObj->schema['fields'] ) ;
 			$whereString = implode( " $operator ", $params ) ;
-			$sql = "SELECT $fieldList FROM $classTable" ;
+			$sortField = !empty( $templateObj->schema['dbparams']['sortField'] ) ?
+				$templateObj->schema['dbparams']['sortField'] :
+				$templateObj->pkField ;
+			$sortDir = !empty( $templateObj->schema['dbparams']['sortDir'] ) ?
+				$templateObj->schema['dbparams']['sortDir'] :
+				"" ;
 
-			if( !empty( $whereString )) {
-				$sql .= " WHERE $whereString" ;
-			}
+			$sql = "SELECT $fieldList FROM $classTable" ;
+			if( !empty( $whereString )) { $sql .= " WHERE $whereString" ; }
+			$sql .= " ORDER BY $sortField $sortDir" ;
 
 			$queryResult = $templateObj->dbConnection->query( $sql ) ;
 
@@ -410,8 +415,15 @@ abstract class Model extends MDB2 {
 
 		$table = $templateObj->schema['dbparams']['table'] ;
 		$pkField = $templateObj->schema['dbparams']['pkfield'] ;
+		$sortField = !empty( $templateObj->schema['dbparams']['sortField'] ) ?
+			$templateObj->schema['dbparams']['sortField'] :
+			$templateObj->pkField ;
+		$sortDir = !empty( $templateObj->schema['dbparams']['sortDir'] ) ?
+			$templateObj->schema['dbparams']['sortDir'] :
+			"" ;
 
 		$sql = "SELECT $pkField, $lookupField FROM $table" ;
+		$sql .= " ORDER BY $sortField $sortDir" ;
 		$queryResult = $templateObj->dbConnection->query( $sql ) ;
 
 		while( $nextRec = $queryResult->fetchRow( MDB2_FETCHMODE_ASSOC )) {
