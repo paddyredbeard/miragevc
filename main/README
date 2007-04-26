@@ -7,6 +7,19 @@
 CHANGE LOG:
 
 ------------------------------------------------------------------------
+r30 | spirituscanis | 2007-04-26 10:49:25 -0700 (Thu, 26 Apr 2007) | 2 lines
+
+- Adding required constant APPLICATION_SESSION_NAME;
+- Fixing order of PHP version evaluation.
+------------------------------------------------------------------------
+r29 | spirituscanis | 2007-04-26 10:36:38 -0700 (Thu, 26 Apr 2007) | 1 line
+
+- Updating README file formate.
+------------------------------------------------------------------------
+r28 | spirituscanis | 2007-04-26 10:32:15 -0700 (Thu, 26 Apr 2007) | 1 line
+
+- Adding LICENSE and README files.
+------------------------------------------------------------------------
 r27 | spirituscanis | 2007-04-26 10:13:25 -0700 (Thu, 26 Apr 2007) | 2 lines
 
 - Model::create() now updates the object's primary key value.
