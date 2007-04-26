@@ -182,7 +182,12 @@ abstract class Model extends MDB2 {
 		$sql .= implode( ", ", array_keys( $objectData )) ;
 		$sql .= " ) VALUES ( " . implode( ", ", $objectData ) . " )" ;
 
-		return $this->dbConnection->exec( $sql ) ;
+		$saved = $this->dbConnection->exec( $sql ) ;
+		if( !PEAR::isError( $saved )) {
+			$this->{$this->pkField} = $this->dbConnection->lastInsertID( $this->table ) ;
+		}
+
+		return $saved ;
 
 	}// end create
 
