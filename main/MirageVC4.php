@@ -26,6 +26,7 @@ $requestedPage = $requestedResources['page'] ;
 $requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
 $pageObject = new $requestedClass() ;
 
+@session_name( APPLICATION_SESSION_NAME ) ;
 @session_start() ;
 if( $pageObject->authenticated( AUTH_USER_KEY )) {
 	$pageObject->doAction() ;

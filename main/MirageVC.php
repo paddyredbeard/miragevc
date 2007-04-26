@@ -31,6 +31,7 @@ $configErrors = array() ;
 if( !defined( 'APPLICATION_BASE_DIR' )) $configErrors[] = "Setting APPLICATION_BASE_DIR not set." ;
 if( !defined( 'APPLICATION_BASE_URI' )) $configErrors[] = "Setting APPLICATION_BASE_URI not set." ;
 if( !defined( 'APPLICATION_LOGIN_RESOURCE' )) $configErrors[] = "Setting APPLICATION_LOGIN_RESOURCE not set." ;
+if( !defined( 'APPLICATION_SESSION_NAME' )) $configErrors[] = "Setting APPLICATION_SESSION_NAME not set." ;
 if( !defined( 'AUTH_USER_KEY' )) $configErrors[] = "Setting AUTH_USER_KEY not set." ;
 
 if( !empty( $configErrors )) {
@@ -173,11 +174,11 @@ function getFiller() {
 /////////////////////////////////////////////////////////////////////////////////
 // for PHP4, include lib4 files; die if < PHP4
 ////////////////////////////////////////
-if( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
-	require_once( "MirageVC4.php" ) ;
-
-} elseif( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
+if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 	showDebug( "MirageVC only works with PHP version 4+" ) ;
+
+} elseif( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
+	require_once( "MirageVC4.php" ) ;
 
 
 } else {// PHP5
@@ -200,6 +201,7 @@ if( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
 	} else {
 		$pageObject = new $requestedClass() ;
 
+		@session_name( APPLICATION_SESSION_NAME ) ;
 		@session_start() ;
 		if( $pageObject->authenticated( AUTH_USER_KEY )) {
 			$pageObject->doAction() ;
