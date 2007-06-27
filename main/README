@@ -9,6 +9,19 @@
 CHANGE LOG:
 
 ------------------------------------------------------------------------
+r33 | spirituscanis | 2007-05-25 13:30:11 -0700 (Fri, 25 May 2007) | 1 line
+
+- Test commit from new ws.
+------------------------------------------------------------------------
+r32 | spirituscanis | 2007-04-26 15:58:25 -0700 (Thu, 26 Apr 2007) | 1 line
+
+- Adding support for default sort field/direction in model ini files.
+------------------------------------------------------------------------
+r31 | spirituscanis | 2007-04-26 12:46:44 -0700 (Thu, 26 Apr 2007) | 2 lines
+
+- Adding INSTALL file.
+- Updating README.
+------------------------------------------------------------------------
 r30 | spirituscanis | 2007-04-26 10:49:25 -0700 (Thu, 26 Apr 2007) | 2 lines
 
 - Adding required constant APPLICATION_SESSION_NAME;
