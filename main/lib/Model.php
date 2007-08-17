@@ -377,19 +377,21 @@ abstract class Model extends MDB2 {
 
 			$queryResult = $templateObj->dbConnection->query( $sql ) ;
 
-			// set the size
-			$returnArray['size'] = PEAR::isError( $queryResult->numRows() ) ? 0 : $queryResult->numRows() ;
+			if( !PEAR::isError( $queryResult )) {
+			    // set the size
+			    $returnArray['size'] = PEAR::isError( $queryResult->numRows() ) ? 0 : $queryResult->numRows() ;
 
-			// populate objects
-			while( $nextRec = $queryResult->fetchRow( MDB2_FETCHMODE_ASSOC )) {
+			    // populate objects
+			    while( $nextRec = $queryResult->fetchRow( MDB2_FETCHMODE_ASSOC )) {
 				$returnArray['objects'][] = new $className( $nextRec[$templateObj->pkField] ) ;
+			    }
+			} else {
+			    $returnArray['size'] = 0 ;
+			    $returnArray['errors'] = $queryResult ;
 			}
 
 			// set the schema
-			//if( $returnArray['size'] > 0 ) {
-			//$returnArray['schema'] = $returnArray['objects'][0]->schema ;
 			$returnArray['schema'] = $templateObj->schema ;
-			//}
 		}
 
 		return $returnArray ;
