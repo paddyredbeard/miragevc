@@ -129,7 +129,7 @@ abstract class Model extends MDB2 {
 	 *
 	 * @return mixed True or PEAR_Error
 	 */
-	function save() {
+	public function save() {
 
 		//$isValid = $this->isValid() ;
 
@@ -157,7 +157,7 @@ abstract class Model extends MDB2 {
 	 *
 	 * @return mixed True or PEAR_Error
 	 */
-	function create() {
+	public function create() {
 
 		$objectData = array() ;
 		foreach( $this->schema['fields'] as $nextField ) {
@@ -200,7 +200,7 @@ abstract class Model extends MDB2 {
 	 *
 	 * @return True or PEAR_Error
 	 */
-	function update() {
+	public function update() {
 
 		$updateFields = array() ;
 		foreach( $this->schema['fields'] as $nextField ) {
@@ -237,7 +237,7 @@ abstract class Model extends MDB2 {
 	 * 
 	 * @return mixed The result of MDB2::exec()
 	 */
-	function delete() {
+	public function delete() {
 		$sql = "DELETE FROM {$this->table} WHERE {$this->pkField}=".$this->data[$this->pkField] ;
 		return $this->dbConnection->exec( $sql ) ;
 	}
@@ -395,6 +395,7 @@ abstract class Model extends MDB2 {
 		}
 
 		return $returnArray ;
+
 	}// end collectionFactory
 
 
