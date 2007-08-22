@@ -199,10 +199,11 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 			header( "Location: ".APPLICATION_URI.ERROR_404_PAGE ) ;
 		}
 	} else {
-		$pageObject = new $requestedClass() ;
 
 		@session_name( APPLICATION_SESSION_NAME ) ;
 		@session_start() ;
+		$pageObject = new $requestedClass() ;
+
 		if( $pageObject->authenticated( AUTH_USER_KEY )) {
 			$pageObject->doAction() ;
 		} else {
