@@ -161,7 +161,7 @@ abstract class Model extends MDB2 {
 
 		$objectData = array() ;
 		foreach( $this->schema['fields'] as $nextField ) {
-			if( !empty( $this->data[$nextField] )) {
+			if( !self::emptyNotZero( $this->data[$nextField] )) {
 
 				switch( $this->schema['field_definitions'][$nextField] ) {
 					case DB_DATATYPE_STRING_BASIC:
@@ -204,7 +204,7 @@ abstract class Model extends MDB2 {
 
 		$updateFields = array() ;
 		foreach( $this->schema['fields'] as $nextField ) {
-			if( !empty( $this->data[$nextField] )) {
+			if( !self::emptyNotZero( $this->data[$nextField] )) {
 
 				switch( $this->schema['field_definitions'][$nextField] ) {
 					case DB_DATATYPE_STRING_BASIC:
@@ -466,6 +466,21 @@ abstract class Model extends MDB2 {
 		}
 
 		return $isValid ;
+	}
+
+
+	/**
+	 * emptyNotZero
+	 * 
+	 * Determine whether a value is empty or numeric zero (0)
+	 *
+	 */ 
+	private static function emptyNotZero( $aValue ) {
+		if( empty( $aValue )) {
+			return !is_numeric( $aValue ) ;
+		} else {
+			return false ;
+		}
 	}
 
 
