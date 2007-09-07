@@ -18,24 +18,28 @@
  */
 class GetVars extends HttpRequestVars {
 
-    public function __construct() {
-	$this->_keys = array_keys( $_GET ) ;
-    }
-
-    public function __destruct() {}
-    private function __set( $aVar, $aVal ) {} 
-
-    private function __get( $aVar ) {
-
-	$returnVar = null ;
-
-	if( !empty( $_GET[$aVar] )) {
-	    $returnVar = $_GET[$aVar] ;
+	public function __construct() {
+		$this->_keys = array_keys( $_GET ) ;
 	}
 
-	return $returnVar ;
-	    
-    }
+	public function __destruct() {}
+	private function __set( $aVar, $aVal ) {} 
+
+	private function __get( $aVar ) {
+
+		$returnVar = null ;
+
+		if( !empty( $_GET[$aVar] )) {
+			if( is_array( $_GET[$aVar] )) {
+				$returnVar = $_GET[$aVar] ;
+			} else {
+				$returnVar = trim( $_GET[$aVar] ) ;
+			}
+		}
+
+		return $returnVar ;
+
+	}
 
 }// end GetVars
 
