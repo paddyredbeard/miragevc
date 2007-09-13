@@ -56,7 +56,7 @@ if( !defined( 'CONTROLLERS_DIR' )) define( 'CONTROLLERS_DIR', 'controller' ) ;
 if( !defined( 'VIEWS_DIR' )) define( 'VIEWS_DIR', 'view' ) ;
 if( !defined( 'PRESENTATION_RESOURCES_DIR' )) define( 'PRESENTATION_RESOURCES_DIR', 'includes' ) ;
 
-if( !defined( 'APPLICATION_SESSION_TIMEOUT' )) define( 'SESSION_TIMEOUT', 1800 ) ; // 30 minutes
+if( !defined( 'APPLICATION_SESSION_TIMEOUT' )) define( 'APPLICATION_SESSION_TIMEOUT', 1800 ) ; // 30 minutes
 
 if( !defined( 'APPLICATION_OS' )) define( 'APPLICATION_OS', 'unix' ) ;
 
