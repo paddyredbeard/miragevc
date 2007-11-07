@@ -40,6 +40,7 @@ class UriResource {
 		// parse the class name
 		} else {
 			$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
+			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
 			$requestArgs = explode( "/", $theResource ) ;
 
 			for( $i=count($requestArgs)-1; $i>=0; $i-- ) {
@@ -56,7 +57,7 @@ class UriResource {
 				$theResource = str_replace( "$lastArg/", "$lastArg", $theResource ) ;
 			}
 
-			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
+			//$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
 			$theResource = str_replace( '/', '_', $theResource ) ;
 		}
 

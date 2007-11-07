@@ -75,19 +75,19 @@ if( !defined( 'ERROR_403_PAGE' )) define( 'ERROR_403_PAGE', '' ) ;
 // setup include_path
 ////////////////////////////////////////
 switch( APPLICATION_OS ) {
-	case 'unix' :
-		ini_set( 'include_path', ini_get( 'include_path' ).":".dirname(__FILE__)."/lib" ) ;
-		if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', '/dev/null' ) ; }
-		break ;
+case 'unix' :	// use :
+	ini_set( 'include_path', ini_get( 'include_path' ).":".dirname(__FILE__)."/lib" ) ;
+	if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', '/dev/null' ) ; }
+	break ;
 
-	case 'windows' :
-		ini_set( 'include_path', ini_get( 'include_path' ).";".dirname(__FILE__)."\\lib" ) ;
-		if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', 'NUL' ) ; }
-		break ;
+case 'windows' :	// use ;
+	ini_set( 'include_path', ini_get( 'include_path' ).";".dirname(__FILE__)."\\lib" ) ;
+	if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', 'NUL' ) ; }
+	break ;
 
-	default :
-		die( "APPLICATION_OS is not properly defined as 'windows' or 'unix'." ) ;
-		break ;
+default :
+	die( "APPLICATION_OS is not properly defined as 'windows' or 'unix'." ) ;
+	break ;
 }// end switch
 
 
@@ -121,7 +121,6 @@ if( SHOW_DEBUG ) {
 function showDebug( $arg, $die=true ) {
 
 	if( !headers_sent() ) {
-		//header( SHOWDEBUG_CONTENT_HEADER ) ;
 		header( "Content-type: text/plain" ) ;
 		print_r( $arg ) ;
 	} else {
@@ -194,7 +193,7 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 
 	if( !class_exists( $requestedClass )) {
 		$error404 = ERROR_404_PAGE ;
-		if( empty( $error404 )) {
+		if( empty( $error404 ) || headers_sent() ) {
 			HttpStatus::sendStatus(404) ;
 			HttpStatus::showStatus(404, true) ;
 		} else {
