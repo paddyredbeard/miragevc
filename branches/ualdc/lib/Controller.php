@@ -50,6 +50,7 @@ abstract class Controller {
 	$this->_getVars = new GetVars() ;
 	$this->_postVars = new PostVars() ;
 	$viewClass = VIEWS_DIR . "_" . $this->_uriResource ;
+	$viewClass = str_replace( "__", "_", $viewClass ) ;
 	$this->_view = new $viewClass() ;
     }
 

@@ -14,8 +14,10 @@
  *
  */
 
+/*
 @include_once( 'myConfig.php' ) ;
 require_once( 'mvcConfig.php' ) ;
+*/
 
 
 
@@ -24,7 +26,8 @@ require_once( 'mvcConfig.php' ) ;
 #################################################################################
 
 /////////////////////////////////////////////////////////////////////////////////
-// The following constants MUST be defined in the application's config.php
+// The following constants MUST be defined in the application's mvcConfig.php
+// or myConfig.php
 ////////////////////////////////////////
 $configErrors = array() ;
 
@@ -190,6 +193,7 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 	$requestedResources = UriResource::getRequestedResources() ;
 	$requestedPage = $requestedResources['page'] ;
 	$requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
+	$requestedClass = str_replace( "__", "_", $requestedClass ) ;
 
 	if( !class_exists( $requestedClass )) {
 		$error404 = ERROR_404_PAGE ;
@@ -210,8 +214,9 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 			$pageObject->doAction() ;
 		} else {
 			//$_SESSION['destination_uri'] = $requestedPage ;
+			//header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
 			$_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
-			header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
+			header( "Location: ".APPLICATION_LOGIN_RESOURCE ) ;
 		}
 	}
 }

@@ -25,6 +25,7 @@ class UriResource {
 	// extract the name of the controller class based on REQUEST_URI
 	public static function getRequestedResources() {
 
+		$theResource = "" ;
 		$requestedResources = array( 'page'=>'', 'itemNumber'=>'' ) ;
 		$lastArg = null ;
 
@@ -39,7 +40,11 @@ class UriResource {
 
 		// parse the class name
 		} else {
-			$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
+			if( !defined( 'APPLICATION_URI' )) { 
+				$theResource = str_replace( APPLICATION_URI.'/', '', $_SERVER['REQUEST_URI'] ) ;
+			}  else {
+				$theResource = $_SERVER['REQUEST_URI'] ;
+			}
 			$theResource = str_replace( '?'.$_SERVER['QUERY_STRING'], '', $theResource ) ;
 			$requestArgs = explode( "/", $theResource ) ;
 
