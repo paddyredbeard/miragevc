@@ -1,0 +1,32 @@
+################################################################################
+#  MirageVC - A Model-View-Controller framework for PHP
+################################################################################
+
+INSTALLATION
+
+________________________________________________________________________________
+-  Method 1:  Global Installation
+--------------------------------------------------------------------------------
+Copy the MirageVC directory to the directory specified in your php_includes
+directory (as defined in php.ini) and include it implicitly.
+
+  - or - 
+
+Add the MirageVC directory to php_includes in php.ini and include it implicitly.
+
+EG.
+require_once( 'MirageVC.php' ) ;
+
+
+
+
+
+________________________________________________________________________________
+-  Method 2:   Local Installation
+--------------------------------------------------------------------------------
+Add the MirageVC directory somewhere within your application's root dir and 
+include it directly.
+
+EG.
+require_once( './lib/MirageVC/MirageVC.php' ) ;
+
