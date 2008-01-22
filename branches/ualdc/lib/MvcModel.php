@@ -44,6 +44,11 @@ abstract class MvcModel extends MDB2 {
 	protected $dbConnection ;
 
 	/**
+	 * @var string The database connection string.
+	 */
+	protected $dsn ;
+
+	/**
 	 * __construct
 	 *
 	 * The class constructor.
@@ -51,9 +56,17 @@ abstract class MvcModel extends MDB2 {
 	 * @param string $classFile The filesystem path to the instantiated MvcModel class.
 	 * @param integer $recno The primary key value of a record to instantiate.
 	 */
-	public function __construct( $classFile=null, $recno=null ) {
+	public function __construct( $classFile=null, $recno=null, $aDsn=APPLICATION_DSN  ) {
 		$this->schema = MvcModel::getSchema( $classFile ) ;
-		$this->dbConnection = &MDB2::singleton( APPLICATION_DSN ) ;
+		$this->dsn = $aDsn ;
+		$this->dbConnection = &MDB2::singleton( 
+				$aDsn, 
+				array( 
+					'persistent'=>true,
+					'portability'=>MDB2_PORTABILITY_NONE 
+					)
+				) ;
+		#$this->dbConnection = &MDB2::singleton( APPLICATION_DSN ) ;
 		$this->data = array() ;
 
 		//add fields as data's array keys
@@ -383,8 +396,11 @@ abstract class MvcModel extends MDB2 {
 
 			    // populate objects
 			    while( $nextRec = $queryResult->fetchRow( MDB2_FETCHMODE_ASSOC )) {
-				$returnArray['objects'][] = new $className( $nextRec[$templateObj->pkField] ) ;
+				$newObject = new $className() ;
+				foreach( $nextRec as $key=>$value ) { $newObject->$key = $value ; }
+				$returnArray['objects'][] = $newObject ;
 			    }
+
 			} else {
 			    $returnArray['size'] = 0 ;
 			    $returnArray['errors'] = $queryResult ;
