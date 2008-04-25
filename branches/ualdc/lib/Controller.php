@@ -25,8 +25,13 @@ abstract class Controller {
 
     /**
      * @var {@link PostVars}
-     /*
+     */
     protected $_postVars ;
+
+    /**
+     * @var {@link SessionVars}
+     */
+    protected $_sessionVars ;
 
     /**
      * @var {@link UriResource}
@@ -49,9 +54,23 @@ abstract class Controller {
 	$this->_itemNumber = $requestedResources['itemNumber'] ;
 	$this->_getVars = new GetVars() ;
 	$this->_postVars = new PostVars() ;
+	$this->_sessionVars = new SessionVars() ;
 	$viewClass = VIEWS_DIR . "_" . $this->_uriResource ;
 	$viewClass = str_replace( "__", "_", $viewClass ) ;
 	$this->_view = new $viewClass() ;
+
+        // add a crude history to session
+        $referer = !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ;
+        $lastPage = !empty( $_SESSION['last_page'] ) ? $_SESSION['last_page'] : null ;
+
+        if( $lastPage !== $referer ) {
+                $_SESSION['last_page'] = $referer ;
+        }
+
+        if( empty( $_SESSION['last_page'] )) {
+                $_SESSION['last_page'] = APPLICATION_URI ;
+        }
+	
     }
 
     public function __destruct() {}

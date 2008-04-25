@@ -14,7 +14,7 @@
 /**
  * HttpRequestVars
  *
- * An abstract utility class extended by {@link GetVars} and {@link PostVars}
+ * An abstract utility class extended by {@link SessionVars}, {@link GetVars} and {@link PostVars}
  */
 abstract class HttpRequestVars {
     public $_keys ;
