@@ -208,6 +208,7 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 		ini_set( 'session.cookie_lifetime', APPLICATION_SESSION_TIMEOUT ) ;
 		@session_name( APPLICATION_SESSION_NAME ) ;
 		@session_start() ;
+		@session_regenerate_id() ;
 		$pageObject = new $requestedClass() ;
 
 		if( $pageObject->authenticated( AUTH_USER_KEY )) {
