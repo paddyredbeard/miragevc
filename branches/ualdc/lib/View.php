@@ -19,6 +19,20 @@
 abstract class View {
 
     /**
+     * @var {@link GetVars}
+     */
+    protected $_getVars ;
+
+    /**
+     * @var {@link PostVars}
+     */
+    protected $_postVars ;
+
+    /**
+     * @var {@link SessionVars}
+     */
+    protected $_sessionVars ;
+    /**
      * @var array An array of variables passed from the corresponding {@link Controller} class.
      */
     protected $_vars ;
@@ -32,6 +46,9 @@ abstract class View {
 
     public function __construct() {
 	$this->_vars = array() ;
+	$this->_getVars = new GetVars() ;
+	$this->_postVars = new PostVars() ;
+	$this->_sessionVars = new SessionVars() ;
     }
 
     /**
