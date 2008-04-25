@@ -63,7 +63,7 @@ abstract class Controller {
         $referer = !empty( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null ;
         $lastPage = !empty( $_SESSION['last_page'] ) ? $_SESSION['last_page'] : null ;
 
-        if( $lastPage !== $referer ) {
+        if( $lastPage !== $referer && !empty( $referer )) {
                 $_SESSION['last_page'] = $referer ;
         }
 
