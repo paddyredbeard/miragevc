@@ -217,7 +217,6 @@ abstract class MvcModel extends MDB2 {
 
 		$updateFields = array() ;
 		foreach( $this->schema['fields'] as $nextField ) {
-			if( !self::emptyNotZero( $this->data[$nextField] )) {
 
 				switch( $this->schema['field_definitions'][$nextField] ) {
 					case DB_DATATYPE_STRING_BASIC:
@@ -227,17 +226,20 @@ abstract class MvcModel extends MDB2 {
 						break ;
 
 					default:
-						$updateFields[] = "$nextField={$this->data[$nextField]}" ;
+						if( self::emptyNotZero( $this->data[$nextField] )) {
+							$updateFields[] = "$nextField=''" ;
+						} else {
+							$updateFields[] = "$nextField={$this->data[$nextField]}" ;
+						}
 						break ;
 				}// end switch
 
-			}
 		}
 
 		$sql  = "UPDATE {$this->table} SET " ;
 		$sql .= implode( ", ", $updateFields ) ;
 		$sql .= " WHERE {$this->pkField}=".$this->data[$this->pkField] ;
-
+#showDebug( $sql ) ;
 		return $this->dbConnection->exec( $sql ) ;
 
 	}// end update
