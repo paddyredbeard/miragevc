@@ -279,7 +279,8 @@ abstract class MvcModel extends MDB2 {
 		$_output = null ;
 
 		if( array_key_exists( $anAttribute, $this->data )) {
-			$_output = html_entity_decode( $this->data[$anAttribute], ENT_QUOTES, 'UTF-8' ) ;
+			#$_output = html_entity_decode( $this->data[$anAttribute], ENT_QUOTES, 'UTF-8' ) ;
+			$_output = $this->data[$anAttribute] ;
 		} else {
 			if ( SHOW_DEBUG ) {
 				$_output = PEAR::raiseError(
