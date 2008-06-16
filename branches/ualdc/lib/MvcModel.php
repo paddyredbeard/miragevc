@@ -279,7 +279,7 @@ abstract class MvcModel extends MDB2 {
 		$_output = null ;
 
 		if( array_key_exists( $anAttribute, $this->data )) {
-			$_output = html_entity_decode( $this->data[$anAttribute], ENT_QUOTES ) ;
+			$_output = html_entity_decode( $this->data[$anAttribute], ENT_QUOTES, 'UTF-8' ) ;
 		} else {
 			if ( SHOW_DEBUG ) {
 				$_output = PEAR::raiseError(
@@ -305,7 +305,7 @@ abstract class MvcModel extends MDB2 {
 		$_output = false ;
 
 		if( array_key_exists( $anAttribute, $this->data )) {
-			$this->data[$anAttribute] = htmlentities( $aValue, ENT_QUOTES ) ;
+			$this->data[$anAttribute] = htmlentities( $aValue, ENT_QUOTES, 'UTF-8', false ) ;
 			$_output = true ;
 		} else {
 			if ( SHOW_DEBUG ) {
