@@ -214,9 +214,7 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 		if( $pageObject->authenticated( AUTH_USER_KEY )) {
 			$pageObject->doAction() ;
 		} else {
-			//$_SESSION['destination_uri'] = $requestedPage ;
-			//header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
-			$_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
+			$_SESSION['destination_uri'] = "http://".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'] ;
 			header( "Location: ".APPLICATION_LOGIN_RESOURCE ) ;
 		}
 	}
