@@ -60,8 +60,8 @@ if( !defined( 'VIEWS_DIR' )) define( 'VIEWS_DIR', 'view' ) ;
 if( !defined( 'PRESENTATION_RESOURCES_DIR' )) define( 'PRESENTATION_RESOURCES_DIR', 'includes' ) ;
 
 if( !defined( 'APPLICATION_SESSION_TIMEOUT' )) define( 'APPLICATION_SESSION_TIMEOUT', 1800 ) ; // 30 minutes
-if( !defined( 'APPLICATION_REGENERATE_SESSION_ID' )) define( 'APPLICATION_REGENERATE_SESSION_ID', false ) ;
-if( !defined( 'APPLICATION_REGENERATE_SESSION_DELETE' )) define( 'APPLICATION_REGENERATE_SESSION_DELETE', true ) ;
+if( !defined( 'APPLICATION_SESSION_REGENERATE_ID' )) define( 'APPLICATION_SESSION_REGENERATE_ID', false ) ;
+if( !defined( 'APPLICATION_SESSION_REGENERATE_DELETE' )) define( 'APPLICATION_SESSION_REGENERATE_DELETE', true ) ;
 
 if( !defined( 'APPLICATION_OS' )) define( 'APPLICATION_OS', 'unix' ) ;
 
@@ -212,6 +212,7 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 		@session_start() ;
 
 		if( APPLICATION_SESSION_REGENERATE_ID ) {
+			//session_regenerate_id() ;
 			@session_regenerate_id( APPLICATION_SESSION_REGENERATE_DELETE ) ;
 		}
 
