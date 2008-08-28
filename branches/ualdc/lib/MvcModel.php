@@ -239,7 +239,6 @@ abstract class MvcModel extends MDB2 {
 		$sql  = "UPDATE {$this->table} SET " ;
 		$sql .= implode( ", ", $updateFields ) ;
 		$sql .= " WHERE {$this->pkField}=".$this->data[$this->pkField] ;
-#showDebug( $sql ) ;
 		return $this->dbConnection->exec( $sql ) ;
 
 	}// end update

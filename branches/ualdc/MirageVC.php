@@ -60,6 +60,8 @@ if( !defined( 'VIEWS_DIR' )) define( 'VIEWS_DIR', 'view' ) ;
 if( !defined( 'PRESENTATION_RESOURCES_DIR' )) define( 'PRESENTATION_RESOURCES_DIR', 'includes' ) ;
 
 if( !defined( 'APPLICATION_SESSION_TIMEOUT' )) define( 'APPLICATION_SESSION_TIMEOUT', 1800 ) ; // 30 minutes
+if( !defined( 'APPLICATION_REGENERATE_SESSION_ID' )) define( 'APPLICATION_REGENERATE_SESSION_ID', false ) ;
+if( !defined( 'APPLICATION_REGENERATE_SESSION_DELETE' )) define( 'APPLICATION_REGENERATE_SESSION_DELETE', true ) ;
 
 if( !defined( 'APPLICATION_OS' )) define( 'APPLICATION_OS', 'unix' ) ;
 
@@ -208,7 +210,11 @@ if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
 		ini_set( 'session.cookie_lifetime', APPLICATION_SESSION_TIMEOUT ) ;
 		@session_name( APPLICATION_SESSION_NAME ) ;
 		@session_start() ;
-		@session_regenerate_id() ;
+
+		if( APPLICATION_SESSION_REGENERATE_ID ) {
+			@session_regenerate_id( APPLICATION_SESSION_REGENERATE_DELETE ) ;
+		}
+
 		$pageObject = new $requestedClass() ;
 
 		if( $pageObject->authenticated( AUTH_USER_KEY )) {
