@@ -3,14 +3,14 @@
 /**
  * MirageVC.php
  *
- * @package	MirageVC
- * @author	Patrick Barabe
- * @copyright	Copyright &copy; 2007 Patrick Barabe
- * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
+ * @package   MirageVC
+ * @author    Patrick Barabe
+ * @copyright Copyright &copy; 2007 Patrick Barabe
+ * @license   http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
  *
- * @todo	Implement better data validation (in class Model).
- * @todo	Add README and LICENSE files.
- * @todo	Check PHP 4 Model class for consistancy w/recent changes.
+ * @todo      Implement better data validation (in class Model).
+ * @todo      Add README and LICENSE files.
+ * @todo      Check PHP 4 Model class for consistancy w/recent changes.
  *
  */
 
@@ -35,7 +35,7 @@ if( !defined( 'APPLICATION_SESSION_NAME' )) $configErrors[] = "Setting APPLICATI
 if( !defined( 'AUTH_USER_KEY' )) $configErrors[] = "Setting AUTH_USER_KEY not set." ;
 
 if( !empty( $configErrors )) {
-	showDebug( array( "The following configuration errors were encountered" => $configErrors )) ;
+    showDebug( array( "The following configuration errors were encountered" => $configErrors )) ;
 }
 
 
@@ -75,19 +75,19 @@ if( !defined( 'ERROR_403_PAGE' )) define( 'ERROR_403_PAGE', '' ) ;
 // setup include_path
 ////////////////////////////////////////
 switch( APPLICATION_OS ) {
-case 'unix' :	// use :
-	ini_set( 'include_path', ini_get( 'include_path' ).":".dirname(__FILE__)."/lib" ) ;
-	if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', '/dev/null' ) ; }
-	break ;
+    case 'unix' :    // use :
+        ini_set( 'include_path', ini_get( 'include_path' ).":".dirname(__FILE__)."/lib" ) ;
+        if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', '/dev/null' ) ; }
+        break ;
 
-case 'windows' :	// use ;
-	ini_set( 'include_path', ini_get( 'include_path' ).";".dirname(__FILE__)."\\lib" ) ;
-	if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', 'NUL' ) ; }
-	break ;
+    case 'windows' : // use ;
+        ini_set( 'include_path', ini_get( 'include_path' ).";".dirname(__FILE__)."\\lib" ) ;
+        if( !defined( 'NULL_FILE' )) { define ( 'NULL_FILE', 'NUL' ) ; }
+        break ;
 
-default :
-	die( "APPLICATION_OS is not properly defined as 'windows' or 'unix'." ) ;
-	break ;
+    default :
+        die( "APPLICATION_OS is not properly defined as 'windows' or 'unix'." ) ;
+        break ;
 }// end switch
 
 
@@ -96,10 +96,10 @@ default :
 // setup error_reporting
 ////////////////////////////////////////
 if( SHOW_DEBUG ) {
-	ini_set( 'error_reporting', E_ALL ) ;
-	ini_set( 'display_errors', 1 ) ;
+    ini_set( 'error_reporting', E_ALL ) ;
+    ini_set( 'display_errors', 1 ) ;
 } else {
-	ini_set( 'display_errors', 0 ) ;
+    ini_set( 'display_errors', 0 ) ;
 }
 
 
@@ -120,19 +120,19 @@ if( SHOW_DEBUG ) {
  */
 function showDebug( $arg, $die=true ) {
 
-	if( !headers_sent() ) {
-		header( "Content-type: text/plain" ) ;
-		print_r( $arg ) ;
-	} else {
-		print "<pre>" ;
-		print_r( $arg ) ;
-		print "</pre>" ;
-	}
+    if( !headers_sent() ) {
+        header( "Content-type: text/plain" ) ;
+        print_r( $arg ) ;
+    } else {
+        print "<pre>" ;
+        print_r( $arg ) ;
+        print "</pre>" ;
+    }
 
 
-	if( $die ) {
-		die() ;
-	}
+    if( $die ) {
+        die() ;
+    }
 
 }// end showDebug
 
@@ -141,13 +141,13 @@ function showDebug( $arg, $die=true ) {
  * __autoload
  */
 function __autoload($class) {
-	$file = str_replace('_','/',$class.'.php');
+    $file = str_replace('_','/',$class.'.php');
 
-	if( SHOW_DEBUG ) {
-		include_once( $file ) ;
-	} else {
-		@include_once( $file ) ;
-	}
+    if( SHOW_DEBUG ) {
+        include_once( $file ) ;
+    } else {
+        @include_once( $file ) ;
+    }
 }// end __autoload
 
 
@@ -159,9 +159,9 @@ function __autoload($class) {
  * @return string
  */
 function getFiller() {
-	$loremIpsum = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi." ;
+    $loremIpsum = "Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi." ;
 
-	return $loremIpsum ;
+    return $loremIpsum ;
 }
 
 
@@ -176,44 +176,45 @@ function getFiller() {
 // for PHP4, include lib4 files; die if < PHP4
 ////////////////////////////////////////
 if( version_compare( PHP_VERSION, "4.0.0" ) < 0 ) {
-	showDebug( "MirageVC only works with PHP version 4+" ) ;
+    showDebug( "MirageVC only works with PHP version 4+" ) ;
 
 } elseif( version_compare( PHP_VERSION, "5.0.0" ) < 0 ) {
-	require_once( "MirageVC4.php" ) ;
+    require_once( "MirageVC4.php" ) ;
 
 
 } else {// PHP5
 
-	/////////////////////////////////////////////////////////////////////////////////
-	// figure out the requested page
-	////////////////////////////////////////
-	$requestedResources = UriResource::getRequestedResources() ;
-	$requestedPage = $requestedResources['page'] ;
-	$requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
+    /////////////////////////////////////////////////////////////////////////////////
+    // figure out the requested page
+    ////////////////////////////////////////
+    $requestedResources = UriResource::getRequestedResources() ;
+    $requestedPage = $requestedResources['page'] ;
+    $requestedClass = CONTROLLERS_DIR . "_" . $requestedPage ;
 
-	if( !class_exists( $requestedClass )) {
-		$error404 = ERROR_404_PAGE ;
-		if( empty( $error404 ) || headers_sent() ) {
-			HttpStatus::sendStatus(404) ;
-			HttpStatus::showStatus(404, true) ;
-		} else {
-			header( "Location: ".APPLICATION_URI.ERROR_404_PAGE ) ;
-		}
-	} else {
+    if( !class_exists( $requestedClass )) {
+        $error404 = ERROR_404_PAGE ;
+        if( empty( $error404 ) || headers_sent() ) {
+            HttpStatus::sendStatus(404) ;
+            HttpStatus::showStatus(404, true) ;
+        } else {
+            header( "Location: ".APPLICATION_URI.ERROR_404_PAGE ) ;
+        }
 
-		ini_set( 'session.cookie_lifetime', APPLICATION_SESSION_TIMEOUT ) ;
-		@session_name( APPLICATION_SESSION_NAME ) ;
-		@session_start() ;
-		$pageObject = new $requestedClass() ;
+    } else {
 
-		if( $pageObject->authenticated( AUTH_USER_KEY )) {
-			$pageObject->doAction() ;
-		} else {
-			//$_SESSION['destination_uri'] = $requestedPage ;
-			$_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
-			header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
-		}
-	}
+        ini_set( 'session.cookie_lifetime', APPLICATION_SESSION_TIMEOUT ) ;
+        @session_name( APPLICATION_SESSION_NAME ) ;
+        @session_start() ;
+        $pageObject = new $requestedClass() ;
+
+        if( $pageObject->authenticated( AUTH_USER_KEY )) {
+            $pageObject->doAction() ;
+        } else {
+            //$_SESSION['destination_uri'] = $requestedPage ;
+            $_SESSION['destination_uri'] = $_SERVER['REQUEST_URI'] ;
+            header( "Location: ".APPLICATION_URI.APPLICATION_LOGIN_RESOURCE ) ;
+        }
+    }
 }
 
 ?>

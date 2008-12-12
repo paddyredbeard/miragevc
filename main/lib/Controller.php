@@ -3,10 +3,10 @@
 /**
  * Controller.php
  *
- * @package	MirageVC
- * @author	Patrick Barabe
- * @copyright	Copyright &copy; 2007 Patrick Barabe
- * @license	http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
+ * @package   MirageVC
+ * @author    Patrick Barabe
+ * @copyright Copyright &copy; 2007 Patrick Barabe
+ * @license   http://creativecommons.org/licenses/GPL/2.0/ GNU Public License
  *
  */
 
@@ -25,7 +25,7 @@ abstract class Controller {
 
     /**
      * @var {@link PostVars}
-     /*
+    /*
     protected $_postVars ;
 
     /**
@@ -44,13 +44,13 @@ abstract class Controller {
     protected $_view ;
 
     public function __construct() {
-	$requestedResources = UriResource::getRequestedResources() ;
-	$this->_uriResource = $requestedResources['page'] ;
-	$this->_itemNumber = $requestedResources['itemNumber'] ;
-	$this->_getVars = new GetVars() ;
-	$this->_postVars = new PostVars() ;
-	$viewClass = VIEWS_DIR . "_" . $this->_uriResource ;
-	$this->_view = new $viewClass() ;
+        $requestedResources = UriResource::getRequestedResources() ;
+        $this->_uriResource = $requestedResources['page'] ;
+        $this->_itemNumber = $requestedResources['itemNumber'] ;
+        $this->_getVars = new GetVars() ;
+        $this->_postVars = new PostVars() ;
+        $viewClass = VIEWS_DIR . "_" . $this->_uriResource ;
+        $this->_view = new $viewClass() ;
     }
 
     public function __destruct() {}
