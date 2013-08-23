@@ -14,7 +14,7 @@
 /**
  * Model
  * 
- * A database utility wrapper for MDB2.  A Model class represents one record in a table.
+ * A database utility wrapper for MDB2.  A Model object represents one record in a table.
  */
 abstract class Model extends MDB2 {
 
